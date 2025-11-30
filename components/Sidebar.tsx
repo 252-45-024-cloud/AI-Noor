@@ -5,9 +5,11 @@ import { useApp } from '../contexts/AppContext';
 interface SidebarProps {
   activeView: AppView;
   setActiveView: (view: AppView) => void;
+  isOpen: boolean;
+  onClose: () => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ activeView, setActiveView }) => {
+const Sidebar: React.FC<SidebarProps> = ({ activeView, setActiveView, isOpen, onClose }) => {
   const { settings, setTheme, logout } = useApp();
   const t = UI_TRANSLATIONS[settings.language];
 
@@ -23,13 +25,24 @@ const Sidebar: React.FC<SidebarProps> = ({ activeView, setActiveView }) => {
   ];
 
   return (
-    <div className="w-64 bg-emerald-900 dark:bg-stone-950 text-emerald-50 h-screen flex flex-col shadow-xl font-arabic border-r border-emerald-800 dark:border-stone-800 transition-colors">
-      <div className="p-6 border-b border-emerald-800 dark:border-stone-800">
-        <h1 className="text-2xl font-bold text-amber-400">{t.appTitle}</h1>
-        <p className="text-xs text-emerald-300 mt-1 uppercase tracking-wider">{t.subtitle}</p>
+    <div 
+      className={`
+        fixed inset-y-0 left-0 z-30 w-64 bg-emerald-900 dark:bg-stone-950 text-emerald-50 h-screen flex flex-col shadow-xl font-arabic border-r border-emerald-800 dark:border-stone-800 transition-transform duration-300 ease-in-out
+        md:relative md:translate-x-0
+        ${isOpen ? 'translate-x-0' : '-translate-x-full'}
+      `}
+    >
+      <div className="p-6 border-b border-emerald-800 dark:border-stone-800 flex justify-between items-center">
+        <div>
+          <h1 className="text-2xl font-bold text-amber-400">{t.appTitle}</h1>
+          <p className="text-xs text-emerald-300 mt-1 uppercase tracking-wider">{t.subtitle}</p>
+        </div>
+        <button onClick={onClose} className="md:hidden text-emerald-300 hover:text-white">
+          <span className="material-icons">close</span>
+        </button>
       </div>
       
-      <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
+      <nav className="flex-1 p-4 space-y-2 overflow-y-auto custom-scrollbar">
         {navItems.map((item) => (
           <button
             key={item.id}

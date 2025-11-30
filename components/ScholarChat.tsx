@@ -10,7 +10,7 @@ const ScholarChat: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   
   // Settings
-  const [mode, setMode] = useState<'deep' | 'fast'>('deep');
+  const [mode, setMode] = useState<'deep' | 'fast'>('fast');
   const [useSearch, setUseSearch] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   
@@ -189,22 +189,22 @@ const ScholarChat: React.FC = () => {
   return (
     <div className="flex flex-col h-full bg-stone-50 dark:bg-stone-900 font-arabic transition-colors">
       {/* Header / Controls */}
-      <div className="bg-white dark:bg-stone-800 p-4 border-b border-stone-200 dark:border-stone-700 flex flex-wrap gap-4 items-center justify-between shadow-sm">
-        <h2 className="text-xl font-bold text-emerald-800 dark:text-emerald-400 flex items-center gap-2">
-          <span>📖</span> {settings.language === 'Bangla' ? 'স্কলার চ্যাট' : 'Scholar Chat'}
+      <div className="bg-white dark:bg-stone-800 p-3 md:p-4 border-b border-stone-200 dark:border-stone-700 flex flex-wrap gap-2 md:gap-4 items-center justify-between shadow-sm">
+        <h2 className="text-lg md:text-xl font-bold text-emerald-800 dark:text-emerald-400 flex items-center gap-2">
+          <span className="hidden md:inline">📖</span> {settings.language === 'Bangla' ? 'স্কলার চ্যাট' : 'Scholar Chat'}
         </h2>
         
-        <div className="flex items-center gap-4 text-sm">
+        <div className="flex items-center gap-2 md:gap-4 text-xs md:text-sm ml-auto">
            <div className="flex bg-stone-100 dark:bg-stone-700 p-1 rounded-lg">
               <button 
                 onClick={() => { setMode('deep'); setUseSearch(false); }}
-                className={`px-3 py-1.5 rounded-md transition-colors ${mode === 'deep' && !useSearch ? 'bg-emerald-600 text-white shadow' : 'text-stone-600 dark:text-stone-300 hover:bg-stone-200 dark:hover:bg-stone-600'}`}
+                className={`px-2 md:px-3 py-1.5 rounded-md transition-colors ${mode === 'deep' && !useSearch ? 'bg-emerald-600 text-white shadow' : 'text-stone-600 dark:text-stone-300 hover:bg-stone-200 dark:hover:bg-stone-600'}`}
               >
                 Thinking
               </button>
               <button 
                 onClick={() => { setMode('fast'); setUseSearch(false); }}
-                className={`px-3 py-1.5 rounded-md transition-colors ${mode === 'fast' && !useSearch ? 'bg-amber-500 text-white shadow' : 'text-stone-600 dark:text-stone-300 hover:bg-stone-200 dark:hover:bg-stone-600'}`}
+                className={`px-2 md:px-3 py-1.5 rounded-md transition-colors ${mode === 'fast' && !useSearch ? 'bg-amber-500 text-white shadow' : 'text-stone-600 dark:text-stone-300 hover:bg-stone-200 dark:hover:bg-stone-600'}`}
               >
                 Fast
               </button>
@@ -212,19 +212,19 @@ const ScholarChat: React.FC = () => {
 
            <button 
              onClick={() => setUseSearch(!useSearch)}
-             className={`flex items-center gap-2 px-3 py-1.5 rounded-lg border ${useSearch ? 'bg-blue-50 border-blue-200 text-blue-700' : 'bg-white dark:bg-stone-800 border-stone-300 dark:border-stone-600 text-stone-600 dark:text-stone-300'}`}
+             className={`flex items-center gap-1 md:gap-2 px-2 md:px-3 py-1.5 rounded-lg border ${useSearch ? 'bg-blue-50 border-blue-200 text-blue-700' : 'bg-white dark:bg-stone-800 border-stone-300 dark:border-stone-600 text-stone-600 dark:text-stone-300'}`}
            >
-             <span className="material-icons text-lg">search</span>
-             {useSearch ? 'On' : 'Off'}
+             <span className="material-icons text-base md:text-lg">search</span>
+             <span className="hidden md:inline">{useSearch ? 'On' : 'Off'}</span>
            </button>
         </div>
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-6 space-y-6 bg-stone-50 dark:bg-stone-900">
+      <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-4 md:space-y-6 bg-stone-50 dark:bg-stone-900">
         {messages.map((msg) => (
           <div key={msg.id} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-            <div className={`max-w-[85%] rounded-2xl p-5 shadow-sm ${
+            <div className={`max-w-[90%] md:max-w-[85%] rounded-2xl p-4 md:p-5 shadow-sm ${
               msg.role === 'user' 
                 ? 'bg-emerald-700 text-white rounded-br-none' 
                 : 'bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-700 text-stone-800 dark:text-stone-200 rounded-bl-none'
@@ -236,7 +236,7 @@ const ScholarChat: React.FC = () => {
                 </div>
               )}
 
-              <div className="prose dark:prose-invert max-w-none whitespace-pre-wrap leading-relaxed font-arabic text-lg">
+              <div className="prose dark:prose-invert max-w-none whitespace-pre-wrap leading-relaxed font-arabic text-base md:text-lg">
                 {msg.text}
               </div>
               
@@ -270,7 +270,7 @@ const ScholarChat: React.FC = () => {
       </div>
 
       {/* Input Area */}
-      <div className="p-4 bg-white dark:bg-stone-800 border-t border-stone-200 dark:border-stone-700">
+      <div className="p-3 md:p-4 bg-white dark:bg-stone-800 border-t border-stone-200 dark:border-stone-700">
         {/* Attachment Preview */}
         {attachment && (
             <div className="flex items-center gap-2 mb-2 p-2 bg-stone-100 dark:bg-stone-700 rounded-lg w-fit">
@@ -282,7 +282,7 @@ const ScholarChat: React.FC = () => {
             </div>
         )}
 
-        <div className="max-w-4xl mx-auto flex gap-3 items-end">
+        <div className="max-w-4xl mx-auto flex gap-2 md:gap-3 items-end">
           {/* File Upload Button */}
           <div className="flex-none">
             <input 
@@ -294,10 +294,10 @@ const ScholarChat: React.FC = () => {
             />
             <button 
                 onClick={() => fileInputRef.current?.click()}
-                className="bg-stone-100 dark:bg-stone-700 hover:bg-stone-200 dark:hover:bg-stone-600 text-stone-600 dark:text-stone-300 rounded-full p-3 w-12 h-12 flex items-center justify-center transition-all"
+                className="bg-stone-100 dark:bg-stone-700 hover:bg-stone-200 dark:hover:bg-stone-600 text-stone-600 dark:text-stone-300 rounded-full p-2 md:p-3 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center transition-all"
                 title="Attach Image"
             >
-                <span className="material-icons">attach_file</span>
+                <span className="material-icons text-lg md:text-2xl">attach_file</span>
             </button>
           </div>
 
@@ -305,10 +305,10 @@ const ScholarChat: React.FC = () => {
            <div className="flex-none">
             <button 
                 onClick={toggleRecording}
-                className={`rounded-full p-3 w-12 h-12 flex items-center justify-center transition-all ${isRecording ? 'bg-red-500 text-white animate-pulse' : 'bg-stone-100 dark:bg-stone-700 hover:bg-stone-200 dark:hover:bg-stone-600 text-stone-600 dark:text-stone-300'}`}
+                className={`rounded-full p-2 md:p-3 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center transition-all ${isRecording ? 'bg-red-500 text-white animate-pulse' : 'bg-stone-100 dark:bg-stone-700 hover:bg-stone-200 dark:hover:bg-stone-600 text-stone-600 dark:text-stone-300'}`}
                 title="Voice Input"
             >
-                <span className="material-icons">{isRecording ? 'stop' : 'mic'}</span>
+                <span className="material-icons text-lg md:text-2xl">{isRecording ? 'stop' : 'mic'}</span>
             </button>
           </div>
 
@@ -323,15 +323,15 @@ const ScholarChat: React.FC = () => {
             }}
             placeholder="Ask a question..."
             rows={1}
-            className="flex-1 border border-stone-300 dark:border-stone-600 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-stone-50 dark:bg-stone-900 text-stone-900 dark:text-stone-100 placeholder-stone-400 resize-none min-h-[50px] max-h-[120px]"
+            className="flex-1 border border-stone-300 dark:border-stone-600 rounded-2xl px-3 py-2 md:px-4 md:py-3 focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-stone-50 dark:bg-stone-900 text-stone-900 dark:text-stone-100 placeholder-stone-400 resize-none min-h-[44px] md:min-h-[50px] max-h-[100px] md:max-h-[120px] text-sm md:text-base"
           />
           
           <button 
             onClick={handleSend}
             disabled={(!input.trim() && !attachment) || isLoading}
-            className="bg-emerald-700 hover:bg-emerald-800 disabled:opacity-50 text-white rounded-full p-3 w-12 h-12 flex items-center justify-center transition-all shadow-lg flex-none"
+            className="bg-emerald-700 hover:bg-emerald-800 disabled:opacity-50 text-white rounded-full p-2 md:p-3 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center transition-all shadow-lg flex-none"
           >
-            <span className="material-icons">send</span>
+            <span className="material-icons text-lg md:text-2xl">send</span>
           </button>
         </div>
       </div>
